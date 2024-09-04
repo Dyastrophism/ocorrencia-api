@@ -1,0 +1,18 @@
+### Create Client
+POST localhost:8080/clients
+Content-Type: application/json
+
+{
+  "name": "Fulano",
+  "cpf": "12345678902",
+  "birthDate": "01/01/2001"
+}
+###
+
+### Get All Clients
+GET localhost:8080/clients
+###
+
+### Get Client by Id
+GET localhost:8080/clients/1
+###
