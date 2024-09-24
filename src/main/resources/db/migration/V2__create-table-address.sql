@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS address (
+    id BIGSERIAL PRIMARY KEY,
+    public_place VARCHAR(255) NOT NULL,
+    neighborhood VARCHAR(255) NOT NULL,
+    zip_code VARCHAR(255) NOT NULL,
+    city VARCHAR(255) NOT NULL,
+    state VARCHAR(255) NOT NULL
+);

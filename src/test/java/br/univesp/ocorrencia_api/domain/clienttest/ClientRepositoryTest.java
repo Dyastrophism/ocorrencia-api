@@ -1,4 +1,4 @@
-package br.univesp.ocorrencia_api.domain;
+package br.univesp.ocorrencia_api.domain.clienttest;
 
 import br.univesp.ocorrencia_api.entity.Client;
 import br.univesp.ocorrencia_api.repository.ClientRepository;
@@ -55,4 +55,26 @@ class ClientRepositoryTest {
         CLIENT.setCpf("12345678909");
         assertThatThrownBy(() -> clientRepository.save(CLIENT)).isInstanceOf(RuntimeException.class);
     }
-}
+
+    @Test
+    void updateClient_WithValidData_ReturnClient() {
+        Client client = testEntityManager.persistAndFlush(CLIENT);
+        client.setName("Updated Name");
+        client.setCpf("12345678909");
+        client.setBirthDate(client.getBirthDate().plusDays(1));
+        Client updatedClient = clientRepository.save(client);
+        assertThat(updatedClient).isEqualTo(client);
+    }
+
+    @Test
+    void getClient_WithExistingId_ReturnClient() {
+        Client client = testEntityManager.persistAndFlush(CLIENT);
+        Client foundClient = clientRepository.findById(client.getId()).orElseThrow();
+        assertThat(foundClient).isEqualTo(client);
+    }
+
+    @Test
+    void getClient_WithUnexistingId_ReturnEmpty() {
+        assertThat(clientRepository.findById(99L)).isEmpty();
+    }
+} 

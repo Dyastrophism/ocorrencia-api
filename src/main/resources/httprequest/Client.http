@@ -16,3 +16,18 @@ GET localhost:8080/clients
 ### Get Client by Id
 GET localhost:8080/clients/1
 ###
+
+### Update Client
+PATCH localhost:8080/clients/1
+Content-Type: application/json
+
+{
+  "name": "Fulano da Silva",
+  "cpf": "12345678903",
+  "birthDate": "01/01/2001"
+}
+###
+
+### Delete Client
+DELETE localhost:8080/clients/1
+###

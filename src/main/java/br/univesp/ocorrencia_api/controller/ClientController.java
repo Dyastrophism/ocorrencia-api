@@ -1,8 +1,8 @@
 package br.univesp.ocorrencia_api.controller;
 
 import br.univesp.ocorrencia_api.service.ClientService;
-import br.univesp.ocorrencia_api.usecases.clientusecases.ClientResponseDTO;
-import br.univesp.ocorrencia_api.usecases.clientusecases.CreateClientDTO;
+import br.univesp.ocorrencia_api.usecases.clientusecases.ClientResponse;
+import br.univesp.ocorrencia_api.usecases.clientusecases.ClientRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -20,30 +20,30 @@ public class ClientController {
     }
 
     @PostMapping
-    public ResponseEntity<ClientResponseDTO> create(@RequestBody CreateClientDTO createClientDTO) {
-        var client = clientService.create(createClientDTO);
+    public ResponseEntity<ClientResponse> createClient(@RequestBody ClientRequest clientRequest) {
+        var client = clientService.create(clientRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(client);
     }
 
     @GetMapping
-    public Page<ClientResponseDTO> findAll(Pageable pageable) {
+    public Page<ClientResponse> findAllClient(Pageable pageable) {
         return clientService.findAll(pageable);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ClientResponseDTO> findById(@PathVariable Long id) {
+    public ResponseEntity<ClientResponse> findById(@PathVariable Long id) {
         return clientService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ClientResponseDTO> update(@PathVariable Long id, @RequestBody CreateClientDTO createClientDTO) {
-        return ResponseEntity.ok(clientService.update(id, createClientDTO));
+    public ResponseEntity<ClientResponse> updateClient(@PathVariable Long id, @RequestBody ClientRequest clientRequest) {
+        return ResponseEntity.ok(clientService.update(id, clientRequest));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteClient(@PathVariable Long id) {
         clientService.delete(id);
         return ResponseEntity.noContent().build();
     }

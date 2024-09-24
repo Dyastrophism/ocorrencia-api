@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Pattern;
 
 import java.time.LocalDate;
 
-public record CreateClientDTO(
+public record ClientRequest(
         @NotBlank
         String name,
         @NotBlank

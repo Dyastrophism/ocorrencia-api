@@ -1,0 +1,40 @@
+### Create Address
+POST {{baseUrl}}/addresses
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "street": "Rua das Flores",
+  "neighborhood": "Centro",
+  "zipCode": "12345678",
+  "city": "São Paulo",
+  "state": "SP"
+}
+###
+
+### Get All Addresses
+GET {{baseUrl}}/addresses
+Authorization: Bearer {{authToken}}
+###
+
+### Get Address by Id
+GET {{baseUrl}}/addresses/4
+Authorization: Bearer {{authToken}}
+###
+
+### Update Address
+PATCH localhost:8080/addresses/4
+Content-Type: application/json
+
+{
+  "street": "Rua das Flores",
+  "neighborhood": "Centro",
+  "zipCode": "12345678",
+  "city": "São Paulo",
+  "state": "SP"
+}
+###
+
+### Delete Address
+DELETE localhost:8080/addresses/4
+###

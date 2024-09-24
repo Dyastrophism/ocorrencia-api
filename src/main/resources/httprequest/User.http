@@ -1,0 +1,19 @@
+### REGISTER SECTION
+POST localhost:8080/users/register
+Content-Type: application/json
+
+{
+    "username": "usuario",
+    "password": "usuario"
+}
+###
+
+### LOGIN SECTION
+POST localhost:8080/users/login
+Content-Type: application/json
+
+{
+    "username": "usuario",
+    "password": "usuario"
+}
+###
