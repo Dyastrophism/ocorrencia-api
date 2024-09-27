@@ -1,5 +1,6 @@
-package br.univesp.ocorrencia_api.security;
+package br.univesp.ocorrencia_api.config;
 
+import br.univesp.ocorrencia_api.security.JwtFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

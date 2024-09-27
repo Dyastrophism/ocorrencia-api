@@ -2,6 +2,7 @@ package br.univesp.ocorrencia_api.controller;
 
 import br.univesp.ocorrencia_api.service.UserService;
 import br.univesp.ocorrencia_api.usecases.userusecases.UserRequest;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,11 +19,13 @@ public class UserController {
         this.userService = userService;
     }
 
+    @Operation(summary = "Register user")
     @PostMapping("/register")
     public void register(@RequestBody UserRequest user) {
         userService.register(user);
     }
 
+    @Operation(summary = "Login user")
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody UserRequest user) {
         return ResponseEntity.ok(userService.login(user));

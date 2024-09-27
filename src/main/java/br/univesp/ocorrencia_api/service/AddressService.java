@@ -1,9 +1,11 @@
 package br.univesp.ocorrencia_api.service;
 
 import br.univesp.ocorrencia_api.entity.Address;
+import br.univesp.ocorrencia_api.exception.AddressNotFoundException;
 import br.univesp.ocorrencia_api.repository.AddressRepository;
 import br.univesp.ocorrencia_api.usecases.addressusecases.AddressRequest;
 import br.univesp.ocorrencia_api.usecases.addressusecases.AddressResponse;
+import br.univesp.ocorrencia_api.usecases.occurrenceusecases.OccurrenceRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,11 @@ public class AddressService {
         this.addressRepository = addressRepository;
     }
 
+    /**
+     * Create address
+     * @param addressRequest address request
+     * @return created address
+     */
     public AddressResponse createAddress(AddressRequest addressRequest) {
         Address address = Address.fromRequest(
                 addressRequest.publicPlace(),
@@ -31,15 +38,38 @@ public class AddressService {
         return AddressResponse.fromEntity(address);
     }
 
+    /**
+     * Find all addresses
+     * @param pageable pageable
+     * @return all addresses pageable
+     */
     public Page<AddressResponse> findAllAddresses(Pageable pageable) {
         return addressRepository.findAll(pageable).map(AddressResponse::fromEntity);
     }
 
+    /**
+     * Find address by id
+     * @param id address id
+     * @return address
+     */
     public Optional<AddressResponse> findAddressById(Long id) {
-        return addressRepository.findById(id).map(AddressResponse::fromEntity);
+        if (addressRepository.existsById(id)) {
+            return addressRepository.findById(id).map(AddressResponse::fromEntity);
+        } else {
+            throw new AddressNotFoundException("Address not found");
+        }
     }
 
+    /**
+     * Update address by id
+     * @param id address id
+     * @param addressRequest new address data
+     * @return updated address
+     */
     public AddressResponse updateAddress(Long id, AddressRequest addressRequest) {
+        if (!addressRepository.existsById(id)) {
+            throw new AddressNotFoundException("Address not found to update");
+        }
         Address address = addressRepository.findById(id).orElseThrow();
         address.setPublicPlace(addressRequest.publicPlace());
         address.setNeighborhood(addressRequest.neighborhood());
@@ -50,12 +80,29 @@ public class AddressService {
         return AddressResponse.fromEntity(address);
     }
 
+    /**
+     * Delete address by id
+     * @param id address id
+     */
     public void deleteAddress(Long id) {
         if (addressRepository.existsById(id)) {
             addressRepository.deleteById(id);
         } else {
-            throw new RuntimeException("Address not found");
+            throw new AddressNotFoundException("Address not found");
         }
 
+    }
+
+    /**
+     * Find address by occurrence request
+     * @param occurrenceRequest occurrence request
+     * @return address
+     */
+    public Address findByOccurrenceRequest(OccurrenceRequest occurrenceRequest) {
+        return addressRepository.findByPublicPlaceAndNeighborhoodAndZipCode(
+                occurrenceRequest.publicPlace(),
+                occurrenceRequest.neighborhood(),
+                occurrenceRequest.zipCode()
+        ).orElseThrow();
     }
 }

@@ -25,6 +25,11 @@ public class UserService {
         this.authenticationManager = authenticationManager;
     }
 
+    /**
+     * Register user
+     * @param userRequest user request
+     * @return user response
+     */
     public UserResponse register(UserRequest userRequest) {
         if (userRepository.existsByUsername(userRequest.username())) {
             throw new IllegalArgumentException("Login already exists");
@@ -35,6 +40,11 @@ public class UserService {
         return new UserResponse(user);
     }
 
+    /**
+     * Login user
+     * @param userRequest user request
+     * @return token
+     */
     public String login(UserRequest userRequest) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userRequest.username(), userRequest.password());
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
