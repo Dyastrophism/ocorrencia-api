@@ -50,7 +50,7 @@ public class AddressService {
     /**
      * Find address by id
      * @param id address id
-     * @return address
+     * @return address found
      */
     public Optional<AddressResponse> findAddressById(Long id) {
         if (addressRepository.existsById(id)) {
@@ -64,7 +64,7 @@ public class AddressService {
      * Update address by id
      * @param id address id
      * @param addressRequest new address data
-     * @return updated address
+     * @return address updated address
      */
     public AddressResponse updateAddress(Long id, AddressRequest addressRequest) {
         if (!addressRepository.existsById(id)) {
@@ -96,7 +96,7 @@ public class AddressService {
     /**
      * Find address by occurrence request
      * @param occurrenceRequest occurrence request
-     * @return address
+     * @return address found
      */
     public Address findByOccurrenceRequest(OccurrenceRequest occurrenceRequest) {
         return addressRepository.findByPublicPlaceAndNeighborhoodAndZipCode(
