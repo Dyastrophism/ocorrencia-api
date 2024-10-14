@@ -46,7 +46,7 @@ user-controller -> POST /users/register -> Try it out
 ```json
 {
   "login": "admin",
-  "senha": "admin"
+  "password": "admin"
 }
 ```
 
